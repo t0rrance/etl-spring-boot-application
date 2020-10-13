@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean name="dataSourceStage" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="${spring.datasource.stage.url}"/>
+        <property name="username" value="${spring.datasource.stage.username}"/>
+        <property name="password" value="${spring.datasource.stage.password}"/>
+    </bean>
+
+    <!--MyBatis-->
+    <bean id="stageSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceStage" />
+        <property name="mapperLocations" value="classpath*:db/mapper/StageMapper.xml" />
+    </bean>
+
+    <bean id="stageMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.example.warehouse.mapper.StageMapper" />
+        <property name="sqlSessionFactory" ref="stageSessionFactory" />
+    </bean>
+
+    <!--Liquibase-->
+    <bean id="stageLiquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSourceStage"/>
+        <property name="changeLog" value="classpath*:db/changelog/stage/*.xml"/>
+    </bean>
+</beans>

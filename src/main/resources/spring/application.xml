@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!-- Activation converting String to Collection types -->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean"/>
+
+    <import resource="classpath*:spring/sourceOne.xml"/>
+    <import resource="classpath*:spring/sourceTwo.xml"/>
+    <import resource="classpath*:spring/stage.xml"/>
+
+</beans>

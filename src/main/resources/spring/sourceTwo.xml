@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean name="dataSourceTwo" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="${spring.datasource.sourceTwo.url}" />
+        <property name="username" value="${spring.datasource.sourceTwo.username}" />
+        <property name="password" value="${spring.datasource.sourceTwo.password}" />
+        <property name="driverClassName" value="${spring.datasource.sourceTwo.driver-class-name}" />
+    </bean>
+
+    <!-- MyBatis -->
+    <bean id="sourceTwoSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceTwo" />
+        <property name="mapperLocations" value="classpath*:db/mapper/SourceTwoMapper.xml" />
+    </bean>
+
+    <bean id="sourceTwoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.example.warehouse.mapper.SourceTwoMapper" />
+        <property name="sqlSessionFactory" ref="sourceTwoSessionFactory" />
+    </bean>
+
+    <!-- Liquibase -->
+    <bean id="sourceTwoLiquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSourceTwo" />
+        <property name="changeLog" value="classpath*:db/changelog/source-two/*.xml" />
+    </bean>
+
+</beans>
