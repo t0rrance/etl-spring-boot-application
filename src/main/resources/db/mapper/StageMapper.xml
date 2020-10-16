@@ -4,4 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.warehouse.mapper.StageMapper">
 
+    <insert id="insertAccommodationStage" useGeneratedKeys="true" keyColumn="id" keyProperty="accommodationStage.id">
+        insert into accommodations (
+        type_accommodation
+        ,address
+        ,price_per_day
+        ,stageDTTM
+        ,duplicat
+        ) values (
+        #{accommodationStage.typeAccommodation}
+        ,#{accommodationStage.address}
+        ,#{accommodationStage.pricePerDay}
+        ,#{accommodationStage.stageDTTM}
+        ,#{accommodationStage.duplicat}
+        )
+    </insert>
+
+    <select id="selectAccommodationsAll" resultType="com.example.warehouse.stage.sourceOne.model.AccommodationStage" >
+        select * from accommodations
+    </select>
+
+    <select id="selectClientAll" resultType="com.example.warehouse.stage.sourceOne.model.ClientStage">
+        select * from clients
+    </select>
+
 </mapper>

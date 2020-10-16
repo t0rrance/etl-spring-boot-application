@@ -11,4 +11,14 @@
     <import resource="classpath*:spring/sourceTwo.xml"/>
     <import resource="classpath*:spring/stage.xml"/>
 
+    <!--extract-->
+    <bean id="sourceOneAccommodationExtractor" class="com.example.warehouse.stage.sourceOne.SourceOneAccommodationExtractor">
+        <property name="sourceOneMapper" ref="sourceOneMapper"/>
+        <property name="stageMapper" ref="stageMapper"/>
+    </bean>
+
+    <bean id="sourceOneService" class="com.example.warehouse.service.ExtractService">
+        <property name="sourceOneAccommodationExtractor" ref="sourceOneAccommodationExtractor"/>
+    </bean>
+
 </beans>

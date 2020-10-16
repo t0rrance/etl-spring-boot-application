@@ -4,4 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.warehouse.mapper.SourceOneMapper">
 
+    <select id="selectAccommodations" resultType="com.example.warehouse.model.sourceOne.Accommodation">
+        select * from accommodations
+    </select>
+
+    <select id="selectClients" resultType="com.example.warehouse.model.sourceOne.Client">
+        select * from clients
+    </select>
+
+    <select id="selectTravels" resultType="com.example.warehouse.model.sourceOne.Travel">
+        select * from travels
+    </select>
+
+    <select id="selectTravelAccommodations" resultType="com.example.warehouse.model.sourceOne.TravelAccommodation">
+        select * from travel_accommodations
+    </select>
+
+    <select id="selectTravelOrders" resultType="com.example.warehouse.model.sourceOne.TravelOrder">
+        select * from travel_orders
+    </select>
+
 </mapper>
