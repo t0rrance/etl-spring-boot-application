@@ -1,19 +1,31 @@
 package com.example.warehouse.mapper;
 
-import com.example.warehouse.stage.sourceOne.model.AccommodationStage;
-import com.example.warehouse.stage.sourceOne.model.ClientStage;
+import com.example.warehouse.model.sourceOne.TravelAccommodation;
+import com.example.warehouse.stage.sourceOne.model.StageAccommodation;
+import com.example.warehouse.stage.sourceOne.model.StageTravel;
+import com.example.warehouse.stage.sourceOne.model.StageTravelAccommodation;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface StageMapper {
 
-    void insertAccommodationStage(@Param("accommodationStage") AccommodationStage accommodationStage);
+    void insertStageAccommodation(@Param("stageAccommodation") StageAccommodation stageAccommodation);
 
-    List<AccommodationStage> selectAccommodationsAll();
+    void insertStageTravel(@Param("stageTravel") StageTravel stageTravel);
 
-    void updateAccommodateStage(@Param("accommodationStage") AccommodationStage accommodationStage);
+    void insertStageTravelAccommodation(@Param("stageTravelAccommodation") StageTravelAccommodation stageTravelAccommodation);
 
-    List<ClientStage> selectClientAll();
+    List<StageAccommodation> selectStageAccommodations();
+
+    List<StageTravel> selectStageTravels();
+
+    List<StageTravelAccommodation> selectTravelAccommodations();
+
+    void updateStageAccommodation(@Param("stageAccommodation") StageAccommodation stageAccommodation);
+
+    void updateStageTravel(@Param("stageTravel") StageTravel stageTravel);
+
+    void updateStageTravelAccommodation(@Param("stageTravelAccommodation") StageTravelAccommodation stageTravelAccommodation);
 
 }

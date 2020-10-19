@@ -3,7 +3,7 @@ package com.example.warehouse.stage.sourceOne;
 import com.example.warehouse.mapper.SourceOneMapper;
 import com.example.warehouse.mapper.StageMapper;
 import com.example.warehouse.model.sourceOne.Accommodation;
-import com.example.warehouse.stage.sourceOne.model.AccommodationStage;
+import com.example.warehouse.stage.sourceOne.model.StageAccommodation;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -19,50 +19,41 @@ public class SourceOneAccommodationExtractor {
     public void extractDataFromSourceToStage() {
 
         List<Accommodation> accommodationList = sourceOneMapper.selectAccommodations();
-        List<AccommodationStage> accommodationStageList = stageMapper.selectAccommodationsAll();
+        List<StageAccommodation> accommodationStageList = stageMapper.selectStageAccommodations();
 
         for (Accommodation accommodation : accommodationList) {
 
-            List<AccommodationStage> listContainsObjectsTheSameKey = accommodationStageList.stream().filter(stageObject -> stageObject.getId().equals(accommodation.getId())).collect(Collectors.toList());
+            List<StageAccommodation> listContainsObjectsTheSameKey = accommodationStageList.stream()
+                    .filter(stageAccommodation -> stageAccommodation.getIdAccommodation().equals(accommodation.getId()))
+                    .filter(stageAccommodation -> stageAccommodation.getTimestampTo() == null)
+                    .collect(Collectors.toList());
 
-            if (!listContainsObjectsTheSameKey.isEmpty()) {
-                updateTheSameObjectTimeStamp(listContainsObjectsTheSameKey);
-                AccommodationStage accommodationStage = createObjectStage(accommodation, listContainsObjectsTheSameKey.get(0).getTimestampTo());
-                stageMapper.insertAccommodationStage(accommodationStage);
-            } else {
-                AccommodationStage accommodationStage = createObjectStage(accommodation);
-                stageMapper.insertAccommodationStage(accommodationStage);
-            }
+           StageAccommodation stageAccommodation = createObjectStage(accommodation);
+           stageMapper.insertStageAccommodation(stageAccommodation);
+
+           if(!listContainsObjectsTheSameKey.isEmpty())
+               updateTheSameObjectTimeStamp(listContainsObjectsTheSameKey, stageAccommodation.getTimestampFrom());
 
         }
 
     }
 
-    private void updateTheSameObjectTimeStamp(List<AccommodationStage> listContainsTheSameObjects) {
+    private void updateTheSameObjectTimeStamp(List<StageAccommodation> listContainsTheSameObjects, Timestamp timestampFrom) {
 
         for (var itemList : listContainsTheSameObjects) {
-            itemList.setTimestampTo(new Timestamp(System.currentTimeMillis()));
-            stageMapper.updateAccommodateStage(itemList);
+            itemList.setTimestampTo(timestampFrom);
+            stageMapper.updateStageAccommodation(itemList);
         }
 
     }
 
-    private AccommodationStage createObjectStage(Accommodation accommodation) {
-        return AccommodationStage.builder()
+    private StageAccommodation createObjectStage(Accommodation accommodation) {
+        return StageAccommodation.builder()
+                .idAccommodation(accommodation.getId())
                 .typeAccommodation(accommodation.getTypeAccommodation())
                 .address(accommodation.getAddress())
                 .pricePerDay(accommodation.getPricePerDay())
                 .timestampFrom(new Timestamp(System.currentTimeMillis()))
-                .timestampTo(null)
-                .build();
-    }
-
-    private AccommodationStage createObjectStage(Accommodation accommodation, Timestamp startTimestampFromFinishTheSame) {
-        return AccommodationStage.builder()
-                .typeAccommodation(accommodation.getTypeAccommodation())
-                .address(accommodation.getAddress())
-                .pricePerDay(accommodation.getPricePerDay())
-                .timestampFrom(startTimestampFromFinishTheSame)
                 .timestampTo(null)
                 .build();
     }

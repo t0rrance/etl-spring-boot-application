@@ -4,28 +4,111 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.warehouse.mapper.StageMapper">
 
-    <insert id="insertAccommodationStage" useGeneratedKeys="true" keyColumn="id" keyProperty="accommodationStage.id">
-        insert into accommodations (
-        type_accommodation
+    <insert id="insertStageAccommodation" useGeneratedKeys="true" keyColumn="id" keyProperty="stageAccommodation.id">
+        insert into stage_accommodations (
+        id_accommodation
+        ,type_accommodation
         ,address
         ,price_per_day
-        ,stageDTTM
-        ,duplicat
+        ,timestamp_from
+        ,timestamp_to
         ) values (
-        #{accommodationStage.typeAccommodation}
-        ,#{accommodationStage.address}
-        ,#{accommodationStage.pricePerDay}
-        ,#{accommodationStage.stageDTTM}
-        ,#{accommodationStage.duplicat}
+        #{stageAccommodation.idAccommodation}
+        ,#{stageAccommodation.typeAccommodation}
+        ,#{stageAccommodation.address}
+        ,#{stageAccommodation.pricePerDay}
+        ,#{stageAccommodation.timestampFrom}
+        ,#{stageAccommodation.timestampTo}
         )
     </insert>
 
-    <select id="selectAccommodationsAll" resultType="com.example.warehouse.stage.sourceOne.model.AccommodationStage" >
-        select * from accommodations
+    <insert id="insertStageTravel" useGeneratedKeys="true" keyColumn="id" keyProperty="stageTravel.id">
+        insert into stage_travels (
+        id_travel
+        ,travel_name
+        ,number_of_seats
+        ,number_occupied_seats
+        ,price_per_seat
+        ,start_date
+        ,finish_date
+        ,timestamp_from
+        ,timestamp_to
+         ) values (
+        #{stageTravel.idTravel}
+        ,#{stageTravel.travelName}
+        ,#{stageTravel.numberOfSeats}
+        ,#{stageTravel.numberOccupiedSeats}
+        ,#{stageTravel.pricePerSeat}
+        ,#{stageTravel.startDate}
+        ,#{stageTravel.finishDate}
+        ,#{stageTravel.timestampFrom}
+        ,#{stageTravel.timestampTo}
+        )
+    </insert>
+
+    <insert id="insertStageTravelAccommodation" useGeneratedKeys="true" keyColumn="id" keyProperty="stageTravelAccommodation.id">
+        insert into stage_travel_accommodations (
+        id_travel_accommodation
+        ,travel_id
+        ,accommodation_id
+        ,timestamp_from
+        ,timestamp_to
+        ) values (
+        #{stageTravelAccommodation.idTravelAccommodation}
+        ,#{stageTravelAccommodation.travelId}
+        ,#{stageTravelAccommodation.accommodationId}
+        ,#{stageTravelAccommodation.timestampFrom}
+        ,#{stageTravelAccommodation.timestampTo}
+        )
+    </insert>
+
+    <update id="updateStageTravelAccommodation" keyColumn="id" keyProperty="stageTravelAccommodation.id">
+        update stage_travel_accommodations
+        set
+            id_travel_accommodation = #{stageTravelAccommodation.idTravelAccommodation}
+            ,travel_id = #{stageTravelAccommodation.travelId}
+            ,accommodation_id = #{stageTravelAccommodation.accommodationId}
+            ,timestamp_from = #{stageTravelAccommodation.timestampFrom}
+            ,timestamp_to = #{stageTravelAccommodation.timestampTo}
+        where id = #{stageTravelAccommodation.id}
+    </update>
+    <update id="updateStageAccommodation" keyColumn="id" keyProperty="stageAccommodation.id">
+        update stage_accommodations
+        set
+            id_accommodation = #{stageAccommodation.idAccommodation}
+            ,type_accommodation = #{stageAccommodation.typeAccommodation}
+            ,address = #{stageAccommodation.address}
+            ,price_per_day = #{stageAccommodation.pricePerDay}
+            ,timestamp_from = #{stageAccommodation.timestampFrom}
+            ,timestamp_to = #{stageAccommodation.timestampTo}
+        where id = #{stageAccommodation.id}
+    </update>
+
+    <update id="updateStageTravel" keyColumn="id" keyProperty="stageTravel.id">
+        update stage_travels
+        set
+            id_travel = #{stageTravel.idTravel}
+            ,travel_name = #{stageTravel.travelName}
+            ,number_of_seats = #{stageTravel.numberOfSeats}
+            ,number_occupied_seats = #{stageTravel.numberOccupiedSeats}
+            ,price_per_seat = #{stageTravel.pricePerSeat}
+            ,start_date = #{stageTravel.startDate}
+            ,finish_date = #{stageTravel.finishDate}
+            ,timestamp_from = #{stageTravel.timestampFrom}
+            ,timestamp_to = #{stageTravel.timestampTo}
+        where id = #{stageTravel.id}
+    </update>
+
+    <select id="selectStageAccommodations" resultType="com.example.warehouse.stage.sourceOne.model.StageAccommodation" >
+        select * from stage_accommodations
     </select>
 
-    <select id="selectClientAll" resultType="com.example.warehouse.stage.sourceOne.model.ClientStage">
-        select * from clients
+    <select id="selectStageTravels" resultType="com.example.warehouse.stage.sourceOne.model.StageTravel">
+        select * from stage_travels
+    </select>
+
+    <select id="selectTravelAccommodations" resultType="com.example.warehouse.stage.sourceOne.model.StageTravelAccommodation">
+        select * from stage_travel_accommodations
     </select>
 
 </mapper>

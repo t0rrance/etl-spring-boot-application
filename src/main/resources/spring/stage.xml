@@ -26,4 +26,5 @@
         <property name="dataSource" ref="dataSourceStage"/>
         <property name="changeLog" value="classpath*:db/changelog/stage/*.xml"/>
     </bean>
+
 </beans>

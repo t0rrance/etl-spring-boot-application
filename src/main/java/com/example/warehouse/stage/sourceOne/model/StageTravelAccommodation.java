@@ -7,12 +7,11 @@ import java.sql.Timestamp;
 
 @Data
 @Builder
-public class ClientStage {
+public class StageTravelAccommodation {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private int phoneNumber;
-    private String address;
+    private Long idTravelAccommodation;
+    private Long travelId;
+    private Long accommodationId;
     private Timestamp timestampFrom;
     private Timestamp timestampTo;
 }

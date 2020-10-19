@@ -17,8 +17,20 @@
         <property name="stageMapper" ref="stageMapper"/>
     </bean>
 
+    <bean id="sourceOneTravelExtractor" class="com.example.warehouse.stage.sourceOne.SourceOneTravelExtractor">
+        <property name="sourceOneMapper" ref="sourceOneMapper"/>
+        <property name="stageMapper" ref="stageMapper"/>
+    </bean>
+
+    <bean id="sourceOneTravelAccommodationExtractor" class="com.example.warehouse.stage.sourceOne.SourceOneTravelAccommodationExtractor">
+        <property name="stageMapper" ref="stageMapper"/>
+        <property name="sourceOneMapper" ref="sourceOneMapper"/>
+    </bean>
+
     <bean id="sourceOneService" class="com.example.warehouse.service.ExtractService">
         <property name="sourceOneAccommodationExtractor" ref="sourceOneAccommodationExtractor"/>
+        <property name="sourceOneTravelExtractor" ref="sourceOneTravelExtractor"/>
+        <property name="sourceOneTravelAccommodationExtractor" ref="sourceOneTravelAccommodationExtractor"/>
     </bean>
 
 </beans>

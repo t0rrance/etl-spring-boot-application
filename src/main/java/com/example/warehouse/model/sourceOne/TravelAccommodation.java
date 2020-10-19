@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 @Builder
 public class TravelAccommodation {
+    private Long id;
     private Long travelId;
     private Long accommodationId;
 }

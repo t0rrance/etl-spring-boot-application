@@ -8,14 +8,14 @@ import java.util.Date;
 
 @Data
 @Builder
-public class TravelStage {
+public class StageTravelOrder {
     private Long id;
-    private String travelName;
+    private Long idTravelOrder;
+    private Long travelId;
+    private Long clientId;
     private int numberOfSeats;
-    private int numberOccupiedSeats;
-    private int pricePerSeat;
-    private Date startDate;
-    private Date finishDate;
+    private Date orderDate;
+    private Date paymentDate;
     private Timestamp timestampFrom;
     private Timestamp timestampTo;
 }
